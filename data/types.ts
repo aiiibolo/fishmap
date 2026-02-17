@@ -6,17 +6,26 @@ export interface FishSpecies {
   nameEn: string;
   scientific: string;
   size: string;
+  sizeEn?: string;
   season: string;
+  seasonEn?: string;
   eating: string;
+  eatingEn?: string;
   emoji: string;
   color: string;
   minSize: number | string;
+  minSizeEn?: string;
   bagLimit: number;
   habitat: string;
+  habitatEn?: string;
   diet: string;
+  dietEn?: string;
   bestBait: string;
+  bestBaitEn?: string;
   technique: string;
+  techniqueEn?: string;
   description: string;
+  descriptionEn?: string;
   img: string;
 }
 
@@ -29,12 +38,15 @@ export interface FishingSpot {
   type: SpotType;
   difficulty: 1 | 2 | 3 | 4;
   description: string;
+  descriptionEn?: string;
   fish: string[];
   tips: string;
+  tipsEn?: string;
 }
 
 export interface MonthData {
   month: string;
+  monthEn?: string;
   emoji: string;
   temp: string;
   fish: string[];
@@ -43,5 +55,6 @@ export interface MonthData {
 export interface TypeIcon {
   icon: string;
   label: string;
+  labelEn?: string;
   color: string;
 }

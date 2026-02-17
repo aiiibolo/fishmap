@@ -1,4 +1,7 @@
+'use client';
+
 import { FishSpecies } from '@/data/types';
+import { useLanguage, localized } from '@/lib/i18n';
 import Image from 'next/image';
 
 interface FishCardProps {
@@ -8,6 +11,8 @@ interface FishCardProps {
 }
 
 export default function FishCard({ fishId, fish, onClick }: FishCardProps) {
+  const { lang } = useLanguage();
+
   return (
     <div
       onClick={onClick}
@@ -41,19 +46,21 @@ export default function FishCard({ fishId, fish, onClick }: FishCardProps) {
         <div className="flex items-center gap-1.5 mb-1">
           <span className="text-sm">{fish.emoji}</span>
           <span className="text-sm font-semibold text-[#e6edf3] truncate">
-            {fish.name}
+            {localized(fish, 'name', lang)}
           </span>
         </div>
-        <p className="text-[11px] text-[#6b7280] mb-2 truncate">{fish.nameEn}</p>
+        <p className="text-[11px] text-[#6b7280] mb-2 truncate">
+          {lang === 'zh' ? fish.nameEn : fish.scientific}
+        </p>
         <div className="flex flex-wrap gap-1">
           <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1e2433] text-[#8b949e]">
-            {fish.size}
+            {localized(fish, 'size', lang)}
           </span>
           <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1e2433] text-[#f59e0b]">
-            {fish.eating}
+            {localized(fish, 'eating', lang)}
           </span>
           <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1e2433] text-[#81C784]">
-            限{fish.bagLimit}条
+            {lang === 'zh' ? `限${fish.bagLimit}条` : `${fish.bagLimit} limit`}
           </span>
         </div>
       </div>

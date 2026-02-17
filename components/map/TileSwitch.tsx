@@ -3,19 +3,22 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { TileLayerType } from '@/lib/mapConfig';
+import { useLanguage } from '@/lib/i18n';
 
 interface TileSwitchProps {
   current: TileLayerType;
   onChange: (type: TileLayerType) => void;
 }
 
-const TILE_OPTIONS: { key: TileLayerType; icon: string; label: string }[] = [
-  { key: 'dark', icon: '🌙', label: '暗色' },
-  { key: 'standard', icon: '🗺️', label: '标准' },
-  { key: 'satellite', icon: '🛰️', label: '卫星' },
+const TILE_OPTIONS: { key: TileLayerType; icon: string; label: string; labelEn: string }[] = [
+  { key: 'dark', icon: '🌙', label: '暗色', labelEn: 'Dark' },
+  { key: 'standard', icon: '🗺️', label: '标准', labelEn: 'Standard' },
+  { key: 'satellite', icon: '🛰️', label: '卫星', labelEn: 'Satellite' },
 ];
 
 function TileSwitchContent({ current, onChange }: TileSwitchProps) {
+  const { lang } = useLanguage();
+
   return (
     <div
       style={{
@@ -32,7 +35,7 @@ function TileSwitchContent({ current, onChange }: TileSwitchProps) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
       }}
     >
-      {TILE_OPTIONS.map(({ key, icon, label }) => (
+      {TILE_OPTIONS.map(({ key, icon, label, labelEn }) => (
         <button
           key={key}
           onClick={() => onChange(key)}
@@ -48,7 +51,7 @@ function TileSwitchContent({ current, onChange }: TileSwitchProps) {
             transition: 'all 0.2s',
           }}
         >
-          {icon} {label}
+          {icon} {lang === 'en' ? labelEn : label}
         </button>
       ))}
     </div>

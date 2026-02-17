@@ -1,6 +1,7 @@
 'use client';
 
 import { MonthData } from '@/data/types';
+import { useLanguage, localized } from '@/lib/i18n';
 
 interface MonthSelectorProps {
   selectedMonth: number;
@@ -9,6 +10,8 @@ interface MonthSelectorProps {
 }
 
 export default function MonthSelector({ selectedMonth, onSelect, seasons }: MonthSelectorProps) {
+  const { lang } = useLanguage();
+
   return (
     <div className="flex gap-1.5 overflow-x-auto pb-2">
       {seasons.map((s, i) => (
@@ -22,7 +25,7 @@ export default function MonthSelector({ selectedMonth, onSelect, seasons }: Mont
           }`}
         >
           <span className="text-base">{s.emoji}</span>
-          <span>{s.month}</span>
+          <span>{localized(s, 'month', lang)}</span>
         </button>
       ))}
     </div>

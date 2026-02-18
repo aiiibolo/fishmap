@@ -53,9 +53,11 @@ export default function SpotPopup({ spot }: SpotPopupProps) {
       <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '4px' }}>
         {lang === 'en' ? spot.nameEn : spot.name}
       </div>
-      <div style={{ fontSize: '12px', color: '#8b949e', marginBottom: '8px' }}>
-        {lang === 'en' ? spot.name : spot.nameEn}
-      </div>
+      {lang === 'zh' && (
+        <div style={{ fontSize: '12px', color: '#8b949e', marginBottom: '8px' }}>
+          {spot.nameEn}
+        </div>
+      )}
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '6px' }}>
         <span style={{
           background: typeInfo.color + '20',

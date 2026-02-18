@@ -58,3 +58,14 @@ export interface TypeIcon {
   labelEn?: string;
   color: string;
 }
+
+export interface Region {
+  id: string;
+  name: string;
+  nameEn: string;
+  state: string;
+  center: [number, number];
+  zoom: number;
+  spots: FishingSpot[];
+  seasons: MonthData[];
+}

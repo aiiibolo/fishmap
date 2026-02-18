@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { FISH_DATA } from '@/data/fish';
-import { SEASONS } from '@/data/seasons';
 import { useLanguage, localized } from '@/lib/i18n';
+import { useRegion } from '@/lib/region';
 import MonthSelector from './MonthSelector';
 import SeasonChart from './SeasonChart';
 
@@ -17,6 +17,7 @@ const BADGE_LABELS = ['🥇', '🥈', '🥉'];
 export default function SeasonGuide({ onFishClick }: SeasonGuideProps) {
   const [selectedMonth, setSelectedMonth] = useState(() => new Date().getMonth());
   const { lang } = useLanguage();
+  const { region } = useRegion();
 
   const t = {
     zh: {
@@ -25,6 +26,8 @@ export default function SeasonGuide({ onFishClick }: SeasonGuideProps) {
       waterTemp: '水温',
       bestTarget: '🏆 本月最佳目标鱼种',
       noData: '本月暂无推荐鱼种数据',
+      selectRegionTitle: '请先选择地区',
+      selectRegionText: '季节数据因地区而异。请使用顶部的地区选择器选择一个地区，以查看当地的季节钓鱼指南。',
     },
     en: {
       title: 'Seasonal Fishing Guide',
@@ -32,10 +35,32 @@ export default function SeasonGuide({ onFishClick }: SeasonGuideProps) {
       waterTemp: 'Water Temp',
       bestTarget: '🏆 Best Target Species This Month',
       noData: 'No recommended species data for this month',
+      selectRegionTitle: 'Select a Region First',
+      selectRegionText: 'Seasonal data varies by region. Please use the region selector at the top to choose a region and view the local seasonal fishing guide.',
     },
   }[lang];
 
-  const season = SEASONS[selectedMonth];
+  // No region selected — prompt user
+  if (!region) {
+    return (
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="mb-6">
+          <h2 className="text-2xl font-serif font-bold bg-gradient-to-r from-[#4FC3F7] to-[#81C784] bg-clip-text text-transparent mb-2">
+            {t.title}
+          </h2>
+          <p className="text-sm text-[#8b949e]">{t.subtitle}</p>
+        </div>
+        <div className="bg-[#141824] border border-[#2a3040] rounded-xl p-8 text-center">
+          <span className="text-4xl block mb-3">🌏</span>
+          <h3 className="text-lg font-serif font-bold text-[#e6edf3] mb-2">{t.selectRegionTitle}</h3>
+          <p className="text-sm text-[#8b949e] max-w-md mx-auto">{t.selectRegionText}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const seasons = region.seasons;
+  const season = seasons[selectedMonth];
   const monthFish = season?.fish ?? [];
 
   return (
@@ -52,7 +77,7 @@ export default function SeasonGuide({ onFishClick }: SeasonGuideProps) {
       <MonthSelector
         selectedMonth={selectedMonth}
         onSelect={setSelectedMonth}
-        seasons={SEASONS}
+        seasons={seasons}
       />
 
       {/* Selected month info */}
@@ -99,7 +124,7 @@ export default function SeasonGuide({ onFishClick }: SeasonGuideProps) {
 
       {/* Season Chart */}
       <div className="mt-6">
-        <SeasonChart />
+        <SeasonChart seasons={seasons} />
       </div>
     </div>
   );

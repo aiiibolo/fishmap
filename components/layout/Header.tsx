@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/lib/i18n';
 import LanguageToggle from '@/components/layout/LanguageToggle';
+import RegionSelector from '@/components/layout/RegionSelector';
 
 interface HeaderProps {
   activeTab: string;
@@ -26,17 +27,18 @@ export default function Header({ activeTab, onTabChange }: HeaderProps) {
         </span>
         <div className="min-w-0">
           <h1 className="text-lg font-serif font-bold bg-gradient-to-r from-[#4FC3F7] to-[#81C784] bg-clip-text text-transparent leading-tight">
-            {lang === 'zh' ? '纽卡斯尔钓鱼地图' : 'Newcastle Fishing Map'}
+            {lang === 'zh' ? '钓鱼指南' : 'Fishing Guide'}
           </h1>
           <p className="text-[10px] text-[#6b7280] hidden sm:block leading-tight">
             {lang === 'zh'
-              ? 'Newcastle NSW · 岸钓指南 · 15 个钓点 · 20 种鱼类'
-              : 'Newcastle NSW · Shore Fishing Guide · 15 Spots · 20 Species'}
+              ? '澳大利亚岸钓指南 · 钓点 · 鱼种 · 季节'
+              : 'Australia Shore Fishing · Spots · Species · Seasons'}
           </p>
         </div>
       </div>
 
       <div className="flex items-center gap-2">
+        <RegionSelector />
         <nav className="flex items-center gap-1 bg-[#141824] rounded-full px-1 py-1 overflow-x-auto">
           {TABS.map((tab) => (
             <button

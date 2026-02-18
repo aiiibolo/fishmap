@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { FishingSpot } from '@/data/types';
+import type { FishingSpot, Region } from '@/data/types';
 
 const MapContent = dynamic(() => import('./MapContent'), {
   ssr: false,
@@ -19,8 +19,27 @@ interface FishingMapProps {
   spots: FishingSpot[];
   selectedSpot: FishingSpot | null;
   onSpotClick: (spot: FishingSpot) => void;
+  region: Region | null;
+  regions: Region[];
+  onRegionClick: (regionId: string) => void;
 }
 
-export default function FishingMap({ spots, selectedSpot, onSpotClick }: FishingMapProps) {
-  return <MapContent spots={spots} selectedSpot={selectedSpot} onSpotClick={onSpotClick} />;
+export default function FishingMap({
+  spots,
+  selectedSpot,
+  onSpotClick,
+  region,
+  regions,
+  onRegionClick,
+}: FishingMapProps) {
+  return (
+    <MapContent
+      spots={spots}
+      selectedSpot={selectedSpot}
+      onSpotClick={onSpotClick}
+      region={region}
+      regions={regions}
+      onRegionClick={onRegionClick}
+    />
+  );
 }

@@ -15,20 +15,29 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Language>('zh');
+  const [lang, setLangState] = useState<Language>('en');
 
   useEffect(() => {
     const saved = localStorage.getItem('fishmap-lang') as Language;
     if (saved === 'zh' || saved === 'en') {
       setLangState(saved);
-      document.documentElement.lang = saved === 'zh' ? 'zh-CN' : 'en';
+    } else {
+      // Auto-detect: Chinese browser → Chinese, everything else → English
+      const browserLang = navigator.language || '';
+      if (browserLang.startsWith('zh')) setLangState('zh');
     }
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.title = lang === 'zh' ? '钓鱼指南 | Fishing Guide' : 'Fishing Guide';
+  }, [lang]);
 
   const setLang = (l: Language) => {
     setLangState(l);
     localStorage.setItem('fishmap-lang', l);
     document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+    document.title = l === 'zh' ? '钓鱼指南 | Fishing Guide' : 'Fishing Guide';
   };
 
   return (

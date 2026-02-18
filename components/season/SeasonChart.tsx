@@ -1,17 +1,21 @@
 'use client';
 
 import { FISH_DATA } from '@/data/fish';
-import { SEASONS } from '@/data/seasons';
+import type { MonthData } from '@/data/types';
 import { useLanguage, localized } from '@/lib/i18n';
 
 const POPULAR_FISH_IDS = Object.keys(FISH_DATA).slice(0, 12);
 
-function isFishActive(fishId: string, monthIndex: number): boolean {
-  const season = SEASONS[monthIndex];
+function isFishActive(fishId: string, monthIndex: number, seasons: MonthData[]): boolean {
+  const season = seasons[monthIndex];
   return season?.fish?.includes(fishId) ?? false;
 }
 
-export default function SeasonChart() {
+interface SeasonChartProps {
+  seasons: MonthData[];
+}
+
+export default function SeasonChart({ seasons }: SeasonChartProps) {
   const { lang } = useLanguage();
 
   const t = {
@@ -38,7 +42,7 @@ export default function SeasonChart() {
             <div className="bg-[#0d1117] px-3 py-2 text-[10px] text-[#6b7280] font-medium sticky left-0 z-10">
               {t.species}
             </div>
-            {SEASONS.map((s, i) => (
+            {seasons.map((s, i) => (
               <div key={i} className="bg-[#0d1117] px-1 py-2 text-center">
                 <span className="text-xs">{s.emoji}</span>
                 <div className="text-[10px] text-[#6b7280]">{localized(s, 'month', lang).slice(0, 3)}</div>
@@ -60,8 +64,8 @@ export default function SeasonChart() {
                   <span className="text-xs">{fish.emoji}</span>
                   <span className="text-[11px] text-[#e6edf3] truncate">{localized(fish, 'name', lang)}</span>
                 </div>
-                {SEASONS.map((_, mi) => {
-                  const active = isFishActive(fishId, mi);
+                {seasons.map((_, mi) => {
+                  const active = isFishActive(fishId, mi, seasons);
                   return (
                     <div
                       key={mi}

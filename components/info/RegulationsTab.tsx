@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FISH_DATA } from '@/data/fish';
 import { useLanguage, localized } from '@/lib/i18n';
+import { useRegion } from '@/lib/region';
 
 function Section({ title, defaultOpen, children }: { title: string; defaultOpen?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(defaultOpen ?? false);
@@ -25,6 +26,8 @@ function Section({ title, defaultOpen, children }: { title: string; defaultOpen?
 export default function RegulationsTab() {
   const fishEntries = Object.entries(FISH_DATA);
   const { lang } = useLanguage();
+  const { region } = useRegion();
+  const stateName = region?.state ?? 'NSW';
 
   const t = {
     zh: {
@@ -262,6 +265,16 @@ export default function RegulationsTab() {
         </h2>
         <p className="text-sm text-[#8b949e]">
           {t.pageSubtitle}
+        </p>
+      </div>
+
+      {/* State banner */}
+      <div className="mb-4 bg-[#4FC3F7]/10 border border-[#4FC3F7]/20 rounded-lg px-4 py-2.5 flex items-center gap-2">
+        <span className="text-sm">📋</span>
+        <p className="text-xs text-[#4FC3F7]">
+          {lang === 'zh'
+            ? `当前显示 ${stateName} 州的钓鱼法规${!region ? '（默认）' : ''}`
+            : `Showing ${stateName} fishing regulations${!region ? ' (default)' : ''}`}
         </p>
       </div>
 

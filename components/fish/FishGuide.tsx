@@ -15,14 +15,14 @@ export default function FishGuide({ onFishClick }: FishGuideProps) {
 
   const labels = {
     zh: {
-      title: '纽卡斯尔鱼种图鉴',
-      subtitle: (count: number) => `纽卡斯尔海域常见的 ${count} 种岸钓鱼类，点击查看详细信息`,
+      title: '鱼种图鉴',
+      subtitle: (count: number) => `常见的 ${count} 种岸钓鱼类，点击查看详细信息`,
       searchPlaceholder: '搜索鱼种名称...',
       noResults: '没有找到匹配的鱼种',
     },
     en: {
-      title: 'Newcastle Fish Guide',
-      subtitle: (count: number) => `${count} common shore fishing species in Newcastle waters — click for details`,
+      title: 'Fish Guide',
+      subtitle: (count: number) => `${count} common shore fishing species — click for details`,
       searchPlaceholder: 'Search fish species...',
       noResults: 'No matching species found',
     },

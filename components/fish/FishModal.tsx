@@ -99,7 +99,9 @@ export default function FishModal({ fishId, fish, onClose }: FishModalProps) {
           <span className="text-2xl">{fish.emoji}</span>
           <h2 className="text-xl font-serif font-bold text-[#e6edf3]">{localized(fish, 'name', lang)}</h2>
         </div>
-        <p className="text-sm text-[#8b949e]">{lang === 'zh' ? fish.nameEn : fish.name}</p>
+        {lang === 'zh' && (
+          <p className="text-sm text-[#8b949e]">{fish.nameEn}</p>
+        )}
         <p className="text-xs text-[#6b7280] italic mt-0.5">{fish.scientific}</p>
       </div>
 

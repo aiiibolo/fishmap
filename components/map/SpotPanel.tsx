@@ -101,9 +101,11 @@ export default function SpotPanel({ spot, onClose, onFishClick }: SpotPanelProps
           <h2 className="text-[#e6edf3] text-xl font-bold">
             {lang === 'en' ? spot.nameEn : spot.name}
           </h2>
-          <p className="text-[#8b949e] text-sm mt-1">
-            {lang === 'en' ? spot.name : spot.nameEn}
-          </p>
+          {lang === 'zh' && (
+            <p className="text-[#8b949e] text-sm mt-1">
+              {spot.nameEn}
+            </p>
+          )}
 
           {/* Badges */}
           <div className="flex gap-2 mt-3 flex-wrap">
@@ -163,9 +165,11 @@ export default function SpotPanel({ spot, onClose, onFishClick }: SpotPanelProps
                     <div className="text-[#e6edf3] text-sm font-medium truncate">
                       {lang === 'en' ? fish.nameEn : fish.name}
                     </div>
-                    <div className="text-[#6b7280] text-xs truncate">
-                      {lang === 'en' ? fish.name : fish.nameEn}
-                    </div>
+                    {lang === 'zh' && (
+                      <div className="text-[#6b7280] text-xs truncate">
+                        {fish.nameEn}
+                      </div>
+                    )}
                     <div className="flex gap-3 mt-1">
                       <span className="text-[#8b949e] text-xs">
                         {t.size} {localized(fish, 'size', lang)}

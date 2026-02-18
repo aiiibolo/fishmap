@@ -1,5 +1,5 @@
-export const MAP_CENTER: [number, number] = [-32.92, 151.78];
-export const MAP_DEFAULT_ZOOM = 12;
+export const AUSTRALIA_CENTER: [number, number] = [-28, 134];
+export const AUSTRALIA_ZOOM = 5;
 
 export const TILE_LAYERS = {
   dark: {

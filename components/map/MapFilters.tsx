@@ -10,6 +10,8 @@ interface MapFiltersProps {
   setFilterDifficulty: (d: number) => void;
   filteredCount: number;
   totalCount: number;
+  hasRegion: boolean;
+  onBackToOverview: () => void;
 }
 
 export default function MapFilters({
@@ -19,6 +21,8 @@ export default function MapFilters({
   setFilterDifficulty,
   filteredCount,
   totalCount,
+  hasRegion,
+  onBackToOverview,
 }: MapFiltersProps) {
   const { lang } = useLanguage();
 
@@ -33,6 +37,9 @@ export default function MapFilters({
       safetyText: '岩石平台钓鱼极其危险，请务必穿着救生衣、防滑鞋，注意潮汐和海浪。切勿独自前往。',
       showing: '显示',
       spots: '个钓点',
+      backToOverview: '← 返回全部地区',
+      selectRegionTitle: '选择地区',
+      selectRegionText: '请在地图上点击一个地区标记，或使用顶部的地区选择器来查看钓点。',
     },
     en: {
       filterTitle: 'Filter Spots',
@@ -44,6 +51,9 @@ export default function MapFilters({
       safetyText: 'Rock fishing is extremely dangerous. Always wear a life jacket and non-slip footwear, and watch the tides and waves. Never go alone.',
       showing: 'Showing',
       spots: 'spots',
+      backToOverview: '← All Regions',
+      selectRegionTitle: 'Select a Region',
+      selectRegionText: 'Click a region marker on the map, or use the region selector at the top to view fishing spots.',
     },
   }[lang];
 
@@ -67,11 +77,35 @@ export default function MapFilters({
     return info.label;
   };
 
+  // Overview mode: show a prompt to select a region
+  if (!hasRegion) {
+    return (
+      <div className="w-[220px] shrink-0 bg-[#141824] border-r border-[#2a3040] flex flex-col h-full overflow-y-auto max-md:hidden">
+        <div className="p-4 border-b border-[#2a3040]">
+          <h2 className="text-[#e6edf3] font-bold text-sm">🌏 {t.selectRegionTitle}</h2>
+        </div>
+        <div className="p-4 flex-1 flex items-start">
+          <p className="text-xs text-[#8b949e] leading-relaxed">
+            {t.selectRegionText}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-[220px] shrink-0 bg-[#141824] border-r border-[#2a3040] flex flex-col h-full overflow-y-auto max-md:hidden">
+      {/* Back to overview */}
+      <button
+        onClick={onBackToOverview}
+        className="w-full text-left px-4 py-2.5 text-xs text-[#4FC3F7] hover:bg-[#1e2433] transition-colors border-b border-[#2a3040] cursor-pointer"
+      >
+        {t.backToOverview}
+      </button>
+
       {/* Header */}
       <div className="p-4 border-b border-[#2a3040]">
-        <h2 className="text-[#e6edf3] font-bold text-sm">{lang === 'zh' ? '🔍' : '🔍'} {t.filterTitle}</h2>
+        <h2 className="text-[#e6edf3] font-bold text-sm">🔍 {t.filterTitle}</h2>
       </div>
 
       {/* Spot Type Filter */}

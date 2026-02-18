@@ -43,6 +43,25 @@
   color: #e6edf3 !important;
 }
 
+/* Region tooltip */
+.region-tooltip.leaflet-tooltip {
+  background: #141824;
+  color: #e6edf3;
+  border: 1px solid #2a3040;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.region-tooltip.leaflet-tooltip::before {
+  border-bottom-color: #2a3040;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
